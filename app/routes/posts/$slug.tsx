@@ -1,20 +1,21 @@
-import { useLoaderData } from 'remix'
-import type { LoaderFunction } from 'remix'
-import invariant from 'tiny-invariant'
-import { getPost } from '~/post'
+import { Link, useLoaderData } from 'remix';
+import type { LoaderFunction } from 'remix';
+import invariant from 'tiny-invariant';
+import { getPost } from '~/post';
 
 export const loader: LoaderFunction = async ({ params }) => {
-    console.log('loader params:', params)
-    invariant(params.slug, 'expected params.slug')
-    return getPost(params.slug)
-}
+    console.log('loader params:', params);
+    invariant(params.slug, 'expected params.slug');
+    return getPost(params.slug);
+};
 
 export default function PostSlug() {
-    const post = useLoaderData()
-    console.log('post:', post)
+    const post = useLoaderData();
+    console.log('post:', post);
     return (
         <div>
             <div dangerouslySetInnerHTML={{ __html: post.html }} />
+            <Link to={`/admin/edit/${post.slug}`}> edit</Link>
         </div>
-    )
+    );
 }
